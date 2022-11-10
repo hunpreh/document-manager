@@ -1,0 +1,55 @@
+*::-webkit-scrollbar {
+  width: 6px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 20px;
+}
+
+.layout-logo {
+  display: flex;
+  justify-content: center;
+  height: 38px;
+  margin: 0.7em auto;
+}
+.layout-title {
+  margin: 1rem 2rem;
+  display: inline-block;
+}
+.layout-content {
+  margin: 0 16px;
+}
+.layout-header {
+  height: 62px;
+  background: #001529;
+  padding: 0;
+}
+.layout-footer {
+  text-align: center;
+  padding: 13px 50px 14px;
+  color: white;
+  background: #002140;
+}
+.flex-overflow {
+  display: flex;
+  flex-direction: column;
+  max-height: 93%;
+  overflow-y: auto;
+}
+.layout-card {
+  background: #fff;
+  margin: 6vh 25px;
+  min-height: 80%;
+  border-radius: 10px;
+  padding: 0.5rem;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+.layout-site {
+  background: #d9d9d9;
+  height: 100vh;
+}

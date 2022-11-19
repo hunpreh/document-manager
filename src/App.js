@@ -1,6 +1,7 @@
 import { Switch, Route, Redirect } from "react-router-dom";
 
 import AppLayout from "./layout/layout";
+import DocumentIndex from "./documentIndex/DocumentIndex";
 
 function App() {
   return (
@@ -10,7 +11,7 @@ function App() {
             <Redirect to="/documentos" />
           </Route>
           <Route path="/documentos">
-            <h1>Documentos</h1>
+            <DocumentIndex />
           </Route>
         </AppLayout>
       </Switch>

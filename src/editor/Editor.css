@@ -1,0 +1,8 @@
+.ck-rounded-corners .ck.ck-toolbar, .ck.ck-toolbar.ck-rounded-corners {
+    position: sticky;
+    top: 0;
+}
+
+.ck-rounded-corners .ck.ck-editor__editable, .ck.ck-editor__editable.ck-rounded-corners {
+    height: 400px;
+}

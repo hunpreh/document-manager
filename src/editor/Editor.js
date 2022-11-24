@@ -16,10 +16,8 @@ const EditorCK = (props) => {
     console.log("Guardar", editr.getData());
   };
 
-  const button = <Button onClick={saveHandler}>Guardar</Button>;
-
   return (
-    <div>
+    <div id="editor_container">
       <Header className="editor_header">
         <Row>
           <Col flex="50px" align="center">
@@ -74,7 +72,6 @@ const EditorCK = (props) => {
             editr.ui.view.toolbar.element.remove();
           }
         }}
-        //onChange={(event, editor) => console.log(editor.getData())}
         editor={Editor}
         data={content}
       />

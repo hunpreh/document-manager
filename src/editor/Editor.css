@@ -1,8 +1,29 @@
 .ck-rounded-corners .ck.ck-toolbar, .ck.ck-toolbar.ck-rounded-corners {
     position: sticky;
-    top: 0;
 }
 
 .ck-rounded-corners .ck.ck-editor__editable, .ck.ck-editor__editable.ck-rounded-corners {
     height: 400px;
 }
+
+.editor_header {
+    height: 64px;
+    background: #001529;
+    padding: 0;
+  }
+  
+  .editor_icon {
+    display: inline-block;
+    margin-left: 15px;
+  }
+  
+  .editor_logo {
+    color: white;
+    font-size: 25px;
+  }
+  
+  .editor_title {
+    display: inline-block;
+    margin-left: 15px;
+    height: 50px;
+  }

@@ -1,18 +1,18 @@
-body, #editor_container {
+body {
     background: var(--ck-color-base-foreground);
 }
 
-.ck-rounded-corners .ck.ck-toolbar, .ck.ck-toolbar.ck-rounded-corners {
-    position: fixed;
-    top: 64px;
-    width: 100%;
-    z-index: 10;
+#editor_container {
+  min-height: 11.5in;
+}
 
-    /* Create the illusion of the toolbar floating over the editable. */
-    box-shadow: 0 0 5px hsla( 0,0%,0%,.2 );
-
-    /* Use the CKEditor CSS variables to keep the UI consistent. */
-    border-bottom: 1px solid var(--ck-color-toolbar-border);
+.ck.ck-toolbar, .ck.ck-toolbar.ck-rounded-corners {
+  position: fixed;
+  top: 64px;
+  width: 100%;
+  z-index: 10;
+  box-shadow: 0 0 5px hsla( 0,0%,0%,.2 );
+  border-bottom: 1px solid var(--ck-color-toolbar-border);
 }
 
 .ck-rounded-corners .ck.ck-editor__editable, .ck.ck-editor__editable.ck-rounded-corners {
@@ -27,10 +27,8 @@ body, #editor_container {
     border-radius: var(--ck-border-radius);
     background: white;
 
-    /* The "page" should cast a slight shadow (3D illusion). */
     box-shadow: 0 0 5px hsla( 0,0%,0%,.1 );
 
-    /* Center the "page". */
     margin: 120px auto;
 }
 

@@ -14,7 +14,7 @@ function App() {
           <Route path="/documentos">
             <DocumentIndex />
           </Route>
-          <Route path="/ckeditor">
+          <Route path="/ckeditor/:id">
             <EditorCK />
           </Route>
         </AppLayout>

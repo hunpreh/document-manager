@@ -12,12 +12,14 @@ const { Title } = Typography;
 const AppLayout = (props) => {
   const [collapsed, setCollapsed] = useState(true);
   const location = useLocation();
+  const pathSnippets = location.pathname.split('/').filter(i => i);
+  const currentPage = pathSnippets.slice(0, 1)[0];
 
   const onCollapseHandler = (toggle) => {
     setCollapsed(toggle);
   };
 
-  if (location.pathname === "/ckeditor")
+  if (currentPage === "ckeditor")
     return <Fragment>{props.children}</Fragment>;
 
   return (

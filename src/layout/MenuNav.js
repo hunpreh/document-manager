@@ -2,6 +2,7 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { Menu } from "antd";
 import { FileOutlined, EditOutlined } from "@ant-design/icons";
+import { v4 as uuidV4 } from "uuid";
 
 const MenuNav = () => {
   const history = useHistory();
@@ -18,7 +19,8 @@ const MenuNav = () => {
   ];
 
   const onClickHandler = (e) => {
-    history.push(`${e.key}`);
+    if(e.key === "/ckeditor") window.open(`${e.key}/${uuidV4()}`, 'Editor de Texto', 'width=900');
+    else history.push(`${e.key}`);
   };
 
   return (

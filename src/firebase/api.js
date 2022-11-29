@@ -1,5 +1,13 @@
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, set } from "firebase/database";
+import { notification } from 'antd';
+
+const openNotification = (type) => {
+  notification[type]({
+    message: type === "success" ? "Guardado" : "Error",
+    description: type === "success" ? "Su documento ha sido guardado" : "Ocurrio un error inesperado"
+  });
+}
 
 const firebaseConfig = {
   apiKey: "AIzaSyASlmY-r03juWu90sjz_tTdpgKY02ZN7gw",
@@ -18,15 +26,13 @@ const app = initializeApp(firebaseConfig);
 // Initialize Realtime Database and get a reference to the service
 const db = getDatabase(app);
 
-export async function saveDocument(documentID, version, content) {
-  set(ref(db, "documents/" + documentID), {
-    version: version,
-    content: content,
-  })
+export async function saveDocument(documentID, documentData) {
+  set(ref(db, "documents/" + documentID), documentData)
     .then(() => {
-      console.log("Guardado")
+      openNotification('success')
     })
     .catch((error) => {
-      console.log(error);
+        openNotification('error')
+        console.dir(error);
     });
 }

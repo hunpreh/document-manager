@@ -1,13 +1,16 @@
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, set } from "firebase/database";
-import { notification } from 'antd';
+import { getDatabase, ref, child, get, set } from "firebase/database";
+import { notification } from "antd";
 
 const openNotification = (type) => {
   notification[type]({
     message: type === "success" ? "Guardado" : "Error",
-    description: type === "success" ? "Su documento ha sido guardado" : "Ocurrio un error inesperado"
+    description:
+      type === "success"
+        ? "Su documento ha sido guardado"
+        : "Ocurrio un error inesperado",
   });
-}
+};
 
 const firebaseConfig = {
   apiKey: "AIzaSyASlmY-r03juWu90sjz_tTdpgKY02ZN7gw",
@@ -29,10 +32,25 @@ const db = getDatabase(app);
 export async function saveDocument(documentID, documentData) {
   set(ref(db, "documents/" + documentID), documentData)
     .then(() => {
-      openNotification('success')
+      openNotification("success");
     })
     .catch((error) => {
-        openNotification('error')
-        console.dir(error);
+      openNotification("error");
+      console.dir(error);
+    });
+}
+
+export async function getDocument(documentID) {
+  const dbRef = ref(db);
+  get(child(dbRef, `documents/${documentID}`))
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        console.log(snapshot.val());
+      } else {
+        console.log("No data available");
+      }
+    })
+    .catch((error) => {
+      console.error(error);
     });
 }

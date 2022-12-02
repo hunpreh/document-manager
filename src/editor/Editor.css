@@ -1,59 +1,61 @@
 body {
-    background: var(--ck-color-base-foreground);
+  background: var(--ck-color-base-foreground);
 }
 
 #editor_container {
   min-height: 11.5in;
 }
 
-.ck.ck-toolbar, .ck.ck-toolbar.ck-rounded-corners {
+.ck.ck-toolbar,
+.ck.ck-toolbar.ck-rounded-corners {
   position: fixed;
   top: 64px;
   width: 100%;
   z-index: 10;
-  box-shadow: 0 0 5px hsla( 0,0%,0%,.2 );
+  box-shadow: 0 0 5px hsla(0, 0%, 0%, 0.2);
   border-bottom: 1px solid var(--ck-color-toolbar-border);
 }
 
-.ck-rounded-corners .ck.ck-editor__editable, .ck.ck-editor__editable.ck-rounded-corners {
-    /* Set the dimensions of the "page". */
-    width: 8.6in;
-    min-height: 11in;
+.ck-rounded-corners .ck.ck-editor__editable,
+.ck.ck-editor__editable.ck-rounded-corners {
+  /* Set the dimensions of the "page". */
+  width: 8.6in;
+  min-height: 11in;
 
-    /* Keep the "page" off the boundaries of the container. */
-    padding: 1cm 2cm 2cm;
+  /* Keep the "page" off the boundaries of the container. */
+  padding: 1cm 2cm 2cm;
 
-    border: 1px hsl( 0,0%,82.7% ) solid;
-    border-radius: var(--ck-border-radius);
-    background: white;
+  border: 1px hsl(0, 0%, 82.7%) solid;
+  border-radius: var(--ck-border-radius);
+  background: white;
 
-    box-shadow: 0 0 5px hsla( 0,0%,0%,.1 );
+  box-shadow: 0 0 5px hsla(0, 0%, 0%, 0.1);
 
-    margin: 120px auto;
+  margin: 120px auto;
 }
 
 .editor_header {
-    position: fixed;
-    top: 0;
-    z-index: 10;
-    width: 100%;
-    background: #001529;
-    padding: 0;
-  }
-  
-  .editor_icon {
-    display: inline-block;
-    margin-left: 15px;
-  }
-  
-  .editor_logo {
-    color: white;
-    font-size: 25px;
-    margin-top: 16px;
-  }
-  
-  .editor_title {
-    display: inline-block;
-    margin-left: 15px;
-    height: 50px;
-  }
+  position: fixed;
+  top: 0;
+  z-index: 10;
+  width: 100%;
+  background: #001529;
+  padding: 0;
+}
+
+.editor_logo {
+  color: white;
+  font-size: 25px;
+  margin-top: 18.5px;
+}
+
+.editor_title {
+  display: inline-block;
+  margin-left: 15px;
+  height: 50px;
+}
+
+.loading {
+  margin-top: 25vh;
+  text-align: center;
+}

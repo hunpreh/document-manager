@@ -41,11 +41,20 @@ export async function saveDocument(documentID, documentData) {
 }
 
 export async function getDocument(documentID) {
+  let document = {};
+  //const dbRef = ref(db, `documents/${documentID}`);
+  // onValue(dbRef, (snapshot) => {
+  //   document = snapshot.val();
+  //   console.log(document);
+  // });
+
+  // return document;
+
   const dbRef = ref(db);
-  get(child(dbRef, `documents/${documentID}`))
+  await get(child(dbRef, `documents/${documentID}`))
     .then((snapshot) => {
       if (snapshot.exists()) {
-        console.log(snapshot.val());
+        document = snapshot.val();
       } else {
         console.log("No data available");
       }
@@ -53,4 +62,6 @@ export async function getDocument(documentID) {
     .catch((error) => {
       console.error(error);
     });
+
+  return document;
 }

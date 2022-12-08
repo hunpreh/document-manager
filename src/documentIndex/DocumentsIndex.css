@@ -3,7 +3,7 @@
 }
 
 .folder {
-  color: #a83500;
+  color: #ffd900;
 }
 
 .new {
@@ -14,12 +14,12 @@
   color: #1890ff;
 }
 
-table tr td.ant-table-selection-column, table tr th.ant-table-selection-column {
-  visibility: hidden;
-}
+/* table tr td.ant-table-selection-column, table tr th.ant-table-selection-column {
+  display: none;
+} */
 
 .tree {
-  font-size: 22px;
+  font-size: 20px;
 }
 
 span.ant-tree-title {
@@ -27,14 +27,26 @@ span.ant-tree-title {
 }
 
 .ant-tree.ant-tree-directory .ant-tree-treenode-selected:before, .ant-tree.ant-tree-directory .ant-tree-treenode-selected:hover:before {
-  background: #58585880;
+  background: #f0f0f0;
+  /* background-color: transparent; */
 }
 
-/* display: none */
 .ant-tree.ant-tree-directory .ant-tree-treenode .ant-tree-switcher {
-  visibility: hidden;
+  display: none;
 }
 
 .ant-tree .ant-tree-treenode-draggable .ant-tree-draggable-icon {
-  visibility: hidden;
+  display: none;
+}
+
+.ant-tree.ant-tree-directory .ant-tree-treenode .ant-tree-node-content-wrapper.ant-tree-node-selected {
+  color: black;
+}
+
+.ant-tree .ant-tree-treenode {
+  align-items: center;
+}
+
+.ant-dropdown-menu-item-disabled:hover, .ant-dropdown-menu-submenu-title-disabled:hover {
+  cursor: default;
 }

@@ -42,6 +42,7 @@
   overflow-y: auto;
 }
 .layout-card {
+  position: relative;
   background: #fff;
   margin: 6vh 25px;
   min-height: 80%;

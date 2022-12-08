@@ -1,14 +1,11 @@
 import "./DocumentsIndex.css";
-import { Dropdown, Tree, Button } from "antd";
-import React, { Fragment, useState } from "react";
-import {
-  PieChartOutlined,
-  RadarChartOutlined,
-  EditTwoTone,
-  EyeTwoTone,
-  DeleteTwoTone,
-} from "@ant-design/icons";
+import { Dropdown, Tree, Drawer } from "antd";
+import React, { Fragment, useState, useEffect, useRef } from "react";
 import getIconFolder from "./getIconFolder";
+// import customIcon from "./customIcon";
+import DropdownMenu from "./DropdownMenu";
+
+// import { getLevels } from "../firebase/api";
 
 const data = [
   {
@@ -19,7 +16,7 @@ const data = [
       {
         key: 12,
         title: "CARPETA 1",
-        type: 'folder',
+        type: "folder",
         children: [
           {
             key: 121,
@@ -38,7 +35,7 @@ const data = [
       {
         key: 13,
         title: "CARPETA 2",
-        type: 'folder',
+        type: "folder",
       },
     ],
   },
@@ -50,7 +47,7 @@ const data = [
       {
         key: 22,
         title: "CARPETA 3",
-        type: 'folder',
+        type: "folder",
         children: [
           {
             key: 221,
@@ -72,6 +69,21 @@ const data = [
 
 const DocumentIndex = () => {
   const [gData, setGData] = useState(data);
+  const [selectedNode, setSelectedNode] = useState();
+  const [open, setOpen] = useState(false);
+  // const colorRef = useRef();
+
+  // useEffect(() => {
+  //   const process = async () => {
+  //     getLevels();
+  //   };
+
+  //   process();
+  // }, []);
+
+  // useEffect(() => {
+  //   console.log(colorRef);
+  // }, [colorRef]);
 
   const onDragEnter = (info) => {
     console.log(info);
@@ -138,54 +150,98 @@ const DocumentIndex = () => {
     setGData(data);
   };
 
-  const clickHandler = (e) => {
-    console.log("Btn clicked");
-    console.log(e);
+  const onClose = () => {
+    setOpen(false);
   };
 
-  const actions = (
-    <Fragment>
-      <Button icon={<EditTwoTone />} onClick={clickHandler}>
-        Editar
-      </Button>
-      <Button icon={<EyeTwoTone />} onClick={clickHandler}>
-        Ver
-      </Button>
-      <Button
-        icon={<DeleteTwoTone twoToneColor="#eb2f96" />}
-        onClick={clickHandler}
-      >
-        Eliminar
-      </Button>
-    </Fragment>
-  );
+  const actions = (<DropdownMenu node={selectedNode} />)
+
+  //nivel
+  //  Crear carpeta
+  //  Actualizar
+  //  Renombrar
+  //  Eliminar {nombre nivel}
+
+  //carpeta OPCION DE CARPETAS DENTRO DE CARPETAS
+  //  Crear carpeta
+  //  Crear documento
+  //  Pegar ? (solo documento)
+  //  Actualizar
+  //  Propiedades de {carpeta}
+      //  Modal con pesta;as de General y Seguridad (Resize, Close)
+      //  General (es como el tipo o categoria de la carpeta)
+      //  Radiochecklist General / Registros / Cancelados / Derrogados
+      //  Seguridad (es quien tiene acceso a esa carpeta)
+      // Son dos tablas, una con usuarios sin acceso, otra con acceso, flechas de pasar todos de un lado a otro o de uno en uno
+  //  Renombrar
+  //  Eliminar {carpeta}
+
+  //documento CAFE VIEJO, AZUL NUEVO O MODIFICADO RECIENTE DE UNA SEMANA
+  //TAG HOVER DE : Modificacion: DD/MM/AAAA HH:MM:SS pm/am Version: #
+  // CAMBIA APUNTADOR A MANITA
+  //  Documentos de referencia de {documento} ?
+  //  Modificar (permiso)
+  //  Editar (permiso)
+  // Copiar {documento}
+  // Solicitar impresion
+  // Imprimir (permiso)
+  // Eliminar {documento}
+  // Propiedades de {documento}
+      // Igual que de seguridad, quien tiene acceso al documento.
+      // Pero con permiso de sin o con acceso a lectura, escritura y ejecucion ?
 
   return (
-    <Dropdown overlay={actions} trigger={["contextMenu"]}>
-      <div>
-        <Tree.DirectoryTree
-          rootClassName="tree"
-          icon={({data: node, expanded}) => {
-            const type = node.type;
-            const date = node.date;
-            const isLeaf = node.isLeaf;
-            const icon = getIconFolder(type, expanded, date, isLeaf);
-            return icon;
-          }}
-          onRightClick={({node}) => { console.log(node) }}
-          draggable
-          blockNode
-          onDragEnter={onDragEnter}
-          onDrop={onDrop}
-          treeData={gData}
-          allowDrop={({dragNode, dropNode, dropPosition}) => {
-            if(dragNode.type === "nivel") return false;
-            else if(dropNode.type === 'folder' && dropPosition === 0 && dragNode.isLeaf) return true;
-            else if(dropNode.type === 'nivel' && dropPosition === 0 && dragNode.type === "folder") return true;
-          }}
-        />
-      </div>
-    </Dropdown>
+    <Fragment>
+      <Drawer
+        title="Basic Drawer"
+        placement="right"
+        onClose={onClose}
+        open={open}
+      >
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+      </Drawer>
+      <Dropdown
+        overlay={actions}
+        trigger={["contextMenu"]}
+        overlayStyle={{ zIndex: 1 }}
+      >
+        <div id="tree_container">
+          <Tree.DirectoryTree
+            rootClassName="tree"
+            icon={({ data: node, expanded }) => {
+              const type = node.type;
+              const date = node.date;
+              const isLeaf = node.isLeaf;
+              const icon = getIconFolder(type, expanded, date, isLeaf);
+              return icon;
+            }}
+            onRightClick={({ node }) => {setSelectedNode(node)}}
+            draggable
+            blockNode
+            onDragEnter={onDragEnter}
+            onDrop={onDrop}
+            treeData={gData}
+            allowDrop={({ dragNode, dropNode, dropPosition }) => {
+              if (dragNode.type === "nivel") return false;
+              else if (
+                dropNode.type === "folder" &&
+                dropPosition === 0 &&
+                dragNode.isLeaf
+              )
+                return true;
+              else if (
+                dropNode.type === "nivel" &&
+                dropPosition === 0 &&
+                dragNode.type === "folder"
+              )
+                return true;
+            }}
+          />
+        </div>
+      </Dropdown>
+    </Fragment>
   );
 };
 export default DocumentIndex;

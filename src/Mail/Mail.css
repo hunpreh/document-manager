@@ -1,0 +1,18 @@
+.app-hide {
+  display: none;
+}
+
+.mail_btn {
+  border: none;
+}
+
+.mail_actions {
+  display: flex;
+  align-items: flex-start;
+}
+
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

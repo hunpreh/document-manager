@@ -1,3 +1,4 @@
+import React from "react";
 import {
   CaretRightFilled,
   RightCircleFilled,
@@ -38,6 +39,8 @@ import {
   TagFilled,
   SmileFilled,
   ThunderboltFilled,
+  FolderOpenFilled,
+  FileFilled,
 } from "@ant-design/icons";
 
 const data = [
@@ -166,4 +169,20 @@ export function getIcon(i) {
 
 export function getAllIcons() {
   return data;
+}
+
+export function getCustomIcon(i, color) {
+  const style = {
+    color: color,
+  };
+
+  const icon = React.cloneElement(data[i].icon, { style });
+  return icon;
+}
+
+export function getIconFolder(isLeaf, isOld, expanded) {
+  if (isLeaf)
+    return <FileFilled style={{ color: isOld ? "#874D00" : "#1890FF" }} />;
+  if (expanded) return <FolderOpenFilled style={{ color: "#FADB14" }} />;
+  return <FolderFilled style={{ color: "#FADB14" }} />;
 }

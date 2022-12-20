@@ -56,7 +56,7 @@ export async function getDocument(documentID) {
       if (snapshot.exists()) {
         document = snapshot.val();
       } else {
-        console.log("No data available");
+        document = null
       }
     })
     .catch((error) => {
@@ -64,4 +64,24 @@ export async function getDocument(documentID) {
     });
 
   return document;
+}
+
+export async function getLevels() {
+  let data = [];
+
+  const dbRef = ref(db);
+  await get(child(dbRef, `SGD/levels`))
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        data = snapshot.val();
+      } else {
+        data = null;
+        console.log("NO HAY");
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+
+  return data;
 }

@@ -1,6 +1,6 @@
 import "./CustomIcon.css";
 import React, { Fragment } from "react";
-import { Row, Col, Input, Typography, Button, Divider } from "antd";
+import { Row, Col, Input, Button, Divider } from "antd";
 
 import IconList from "./IconList";
 import ColorPalette from "./ColorPalette";

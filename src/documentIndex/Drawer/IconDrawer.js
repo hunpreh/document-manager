@@ -10,6 +10,13 @@ const IconDrawer = (props) => {
   const [iconIndex, setIconIndex] = useState(0);
 
   useEffect(() => {
+    try {
+      setIconIndex(props.node.customIcon.num);
+      setIColor(props.node.customIcon.color);
+    } catch (error) {}
+  }, [props.onOpen]);
+
+  useEffect(() => {
     const icon = getIcon(iconIndex);
     setSelectedIcon(icon);
   }, [iconIndex]);

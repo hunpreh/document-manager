@@ -1,31 +1,23 @@
 import "./DocumentsIndex.css";
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useState, useCallback } from "react";
 import { Dropdown } from "antd";
 
 import IconDrawer from "./Drawer/IconDrawer";
 import DropdownMenu from "./DropdownMenu/DropdownMenu";
 import TreeDirectory from "./Tree/TreeDirectory";
 
-// import { getLevels } from "../firebase/api";
-
 const DocumentIndex = () => {
   const [selectedNode, setSelectedNode] = useState();
   const [showDrawer, setShowDrawer] = useState(false);
 
-  // useEffect(() => {
-  //   const process = async () => {
-  //     getLevels();
-  //   };
-
-  //   process();
-  // }, []);
+  const onShowDrawer = useCallback(() => {
+    setShowDrawer((show) => !show);
+  }, []);
 
   const actions = (
     <DropdownMenu
       node={selectedNode}
-      onOpen={() => {
-        setShowDrawer(true);
-      }}
+      onOpen={onShowDrawer}
     />
   );
 
@@ -33,9 +25,8 @@ const DocumentIndex = () => {
     <Fragment>
       <IconDrawer
         onOpen={showDrawer}
-        onClose={() => {
-          setShowDrawer(false);
-        }}
+        onClose={onShowDrawer}
+        node={selectedNode}
       />
       <Dropdown
         overlay={actions}

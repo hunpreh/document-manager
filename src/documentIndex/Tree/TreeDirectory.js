@@ -1,7 +1,6 @@
 import "./TreeDirectory.css";
 import React, { useState, useEffect } from "react";
 import { Tree } from "antd";
-import { LoadingOutlined } from "@ant-design/icons";
 import {
   onDragEnter,
   onDrop,
@@ -10,7 +9,7 @@ import {
   updateTreeData,
 } from "./TreeHandlers";
 import { getLevels } from "../../firebase/api";
-//
+
 const TreeDirectory = (props) => {
   const [data, setData] = useState();
   const [loading, setLoading] = useState(false);
@@ -41,7 +40,6 @@ const TreeDirectory = (props) => {
     new Promise((resolve) => {
       setLoading(key);
       if (children) {
-        console.log("what");
         resolve();
         return;
       }

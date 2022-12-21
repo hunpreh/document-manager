@@ -1,5 +1,5 @@
 import "./DocumentsIndex.css";
-import React, { Fragment, useState, useCallback } from "react";
+import React, { Fragment, useState, useCallback, useRef } from "react";
 import { Dropdown } from "antd";
 
 import IconDrawer from "./Drawer/IconDrawer";
@@ -9,6 +9,7 @@ import TreeDirectory from "./Tree/TreeDirectory";
 const DocumentIndex = () => {
   const [selectedNode, setSelectedNode] = useState();
   const [showDrawer, setShowDrawer] = useState(false);
+  const ref = useRef();
 
   const onShowDrawer = useCallback(() => {
     setShowDrawer((show) => !show);
@@ -18,6 +19,7 @@ const DocumentIndex = () => {
     <DropdownMenu
       node={selectedNode}
       onOpen={onShowDrawer}
+      onReload={() => ref.current.onLoadData(selectedNode)}
     />
   );
 
@@ -35,6 +37,7 @@ const DocumentIndex = () => {
       >
         <div>
           <TreeDirectory
+            ref={ref}
             onSelectedNode={(n) => {
               setSelectedNode(n);
             }}

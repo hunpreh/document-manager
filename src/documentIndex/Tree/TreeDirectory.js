@@ -1,5 +1,10 @@
 import "./TreeDirectory.css";
-import React, { useState, useEffect } from "react";
+import React, {
+  useState,
+  useEffect,
+  forwardRef,
+  useImperativeHandle,
+} from "react";
 import { Tree } from "antd";
 import {
   onDragEnter,
@@ -10,7 +15,7 @@ import {
 } from "./TreeHandlers";
 import { getLevels } from "../../firebase/api";
 
-const TreeDirectory = (props) => {
+const TreeDirectory = forwardRef((props, ref) => {
   const [data, setData] = useState();
   const [loading, setLoading] = useState(false);
 
@@ -36,13 +41,13 @@ const TreeDirectory = (props) => {
     process();
   }, []);
 
-  const onLoadData = ({ key, children }) =>
+  useImperativeHandle(ref, () => ({
+    onLoadData,
+  }));
+
+  const onLoadData = ({ key }) =>
     new Promise((resolve) => {
       setLoading(key);
-      if (children) {
-        resolve();
-        return;
-      }
       setTimeout(() => {
         setLoading(false);
         setData((node) =>
@@ -82,5 +87,6 @@ const TreeDirectory = (props) => {
       draggable
     />
   );
-};
+});
+
 export default TreeDirectory;

@@ -94,20 +94,19 @@ export function onAllowDrop({ dragNode, dropNode, dropPosition }) {
 }
 
 export function updateTreeData(list, key, children) {
-  const newData = [];
-  list.map((node) => {
+  const newData = list.map((node) => {
     if (node.key === key) {
-      newData.push({
+      return {
         ...node,
         children,
-      });
+      };
     } else if (node.children) {
-      newData.push({
+      return {
         ...node,
         children: updateTreeData(node.children, key, children),
-      });
+      };
     } else {
-      newData.push(node);
+      return node;
     }
   });
   return newData;

@@ -1,3 +1,4 @@
+import { LoadingOutlined } from "@ant-design/icons";
 import { getCustomIcon, getIconFolder } from "../../assets/icons";
 import { isOld } from "../../services/dateService";
 
@@ -63,8 +64,9 @@ export function onDrop(info, gData) {
   return data;
 }
 
-export function onIcon({ data: node, expanded }) {
+export function onIcon(node, expanded, loading) {
   let icon;
+  if (node.key === loading) return <LoadingOutlined />;
   if (node.type === "nivel") {
     icon = getCustomIcon(node.customIcon.num, node.customIcon.color);
   } else {
@@ -89,4 +91,24 @@ export function onAllowDrop({ dragNode, dropNode, dropPosition }) {
     dragNode.type === "folder"
   )
     return true;
+}
+
+export function updateTreeData(list, key, children) {
+  const newData = [];
+  list.map((node) => {
+    if (node.key === key) {
+      newData.push({
+        ...node,
+        children,
+      });
+    } else if (node.children) {
+      newData.push({
+        ...node,
+        children: updateTreeData(node.children, key, children),
+      });
+    } else {
+      newData.push(node);
+    }
+  });
+  return newData;
 }

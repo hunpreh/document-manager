@@ -1,11 +1,19 @@
 import "./TreeDirectory.css";
 import React, { useState, useEffect } from "react";
 import { Tree } from "antd";
-import { onDragEnter, onDrop, onIcon, onAllowDrop } from "./TreeHandlers";
+import { LoadingOutlined } from "@ant-design/icons";
+import {
+  onDragEnter,
+  onDrop,
+  onIcon,
+  onAllowDrop,
+  updateTreeData,
+} from "./TreeHandlers";
 import { getLevels } from "../../firebase/api";
-
+//
 const TreeDirectory = (props) => {
   const [data, setData] = useState();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const process = async () => {
@@ -29,15 +37,45 @@ const TreeDirectory = (props) => {
     process();
   }, []);
 
+  const onLoadData = ({ key, children }) =>
+    new Promise((resolve) => {
+      setLoading(key);
+      if (children) {
+        console.log("what");
+        resolve();
+        return;
+      }
+      setTimeout(() => {
+        setLoading(false);
+        setData((node) =>
+          updateTreeData(node, key, [
+            {
+              title: "Folder Test",
+              type: "folder",
+              key: `${key}-0`,
+            },
+            {
+              title: "File Test",
+              isLeaf: true,
+              key: `${key}-1`,
+            },
+          ])
+        );
+        resolve();
+      }, 3000);
+    });
+
   return (
     <Tree.DirectoryTree
       rootClassName="tree"
       treeData={data}
-      icon={onIcon}
+      icon={({ data: node, expanded }) => {
+        return onIcon(node, expanded, loading);
+      }}
       onRightClick={({ node }) => {
         props.onSelectedNode(node);
       }}
-      expandAction={"doubleClick"}
+      loadData={onLoadData}
       allowDrop={onAllowDrop}
       onDragEnter={onDragEnter}
       onDrop={(info) => {

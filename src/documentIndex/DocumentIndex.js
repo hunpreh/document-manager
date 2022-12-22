@@ -15,6 +15,14 @@ const DocumentIndex = () => {
     setShowDrawer((show) => !show);
   }, []);
 
+  const updateIcon = (icon) => {
+    for (const n of ref.current.data) {
+      if (n.key === selectedNode.key) {
+        n.customIcon = icon;
+      }
+    }
+  };
+
   const actions = (
     <DropdownMenu
       node={selectedNode}
@@ -29,6 +37,7 @@ const DocumentIndex = () => {
         onOpen={showDrawer}
         onClose={onShowDrawer}
         node={selectedNode}
+        onSaveIcon={updateIcon}
       />
       <Dropdown
         overlay={actions}

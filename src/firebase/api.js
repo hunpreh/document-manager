@@ -7,7 +7,7 @@ const openNotification = (type) => {
     message: type === "success" ? "Guardado" : "Error",
     description:
       type === "success"
-        ? "Su documento ha sido guardado"
+        ? "¡Operación exitosa!"
         : "Ocurrio un error inesperado",
   });
 };
@@ -84,4 +84,15 @@ export async function getLevels() {
     });
 
   return data;
+}
+
+export async function updateIcon(levelID, iconData) {
+  set(ref(db, "SGD/levels/" + levelID + "/customIcon"), iconData)
+    .then(() => {
+      openNotification("success");
+    })
+    .catch((error) => {
+      openNotification("error");
+      console.dir(error);
+    });
 }

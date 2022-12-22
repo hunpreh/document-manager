@@ -14,6 +14,7 @@ import {
   updateTreeData,
 } from "./TreeHandlers";
 import { getLevels } from "../../firebase/api";
+const { DirectoryTree } = Tree;
 
 const TreeDirectory = forwardRef((props, ref) => {
   const [data, setData] = useState();
@@ -43,6 +44,7 @@ const TreeDirectory = forwardRef((props, ref) => {
 
   useImperativeHandle(ref, () => ({
     onLoadData,
+    data,
   }));
 
   const onLoadData = ({ key }) =>
@@ -69,7 +71,7 @@ const TreeDirectory = forwardRef((props, ref) => {
     });
 
   return (
-    <Tree.DirectoryTree
+    <DirectoryTree
       rootClassName="tree"
       treeData={data}
       icon={({ data: node, expanded }) => {

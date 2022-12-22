@@ -60,7 +60,13 @@ const CustomIcon = (props) => {
         </div>
       </Row>
       <div className="icon_save_btn">
-        <Button type="primary" block>
+        <Button
+          type="primary"
+          block
+          onClick={() => {
+            props.onSave();
+          }}
+        >
           Guardar cambios
         </Button>
       </div>

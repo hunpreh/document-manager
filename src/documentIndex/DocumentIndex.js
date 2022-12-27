@@ -3,16 +3,22 @@ import React, { Fragment, useState, useCallback, useRef } from "react";
 import { Dropdown } from "antd";
 
 import IconDrawer from "./Drawer/IconDrawer";
+import TreeModal from "./Modal/TreeModal";
 import DropdownMenu from "./DropdownMenu/DropdownMenu";
 import TreeDirectory from "./Tree/TreeDirectory";
 
 const DocumentIndex = () => {
   const [selectedNode, setSelectedNode] = useState();
   const [showDrawer, setShowDrawer] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const ref = useRef();
 
   const onShowDrawer = useCallback(() => {
     setShowDrawer((show) => !show);
+  }, []);
+
+  const onShowModal = useCallback(() => {
+    setShowModal((show) => !show);
   }, []);
 
   const updateIcon = (icon) => {
@@ -26,7 +32,9 @@ const DocumentIndex = () => {
   const actions = (
     <DropdownMenu
       node={selectedNode}
-      onOpen={onShowDrawer}
+      onOpenDrawer={onShowDrawer}
+      onOpenModal={onShowModal}
+      onEdit={() => ref.current.setIsEdit(selectedNode.id)}
       onReload={() => ref.current.onLoadData(selectedNode)}
     />
   );
@@ -38,6 +46,10 @@ const DocumentIndex = () => {
         onClose={onShowDrawer}
         node={selectedNode}
         onSaveIcon={updateIcon}
+      />
+      <TreeModal 
+        onOpen={showModal}
+        onCloseModal={onShowModal}
       />
       <Dropdown
         overlay={actions}

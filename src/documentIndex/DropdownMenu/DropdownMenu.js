@@ -107,8 +107,9 @@ const DropdownMenu = (props) => {
 
   const onClickHandler = ({ key }) => {
     console.log("Click en:", key);
-    if(key === "personalizar") props.onOpen();
+    if(key === "personalizar") props.onOpenDrawer();
     if(key === "actualizar") props.onReload();
+    if(key === "renombrar") props.onEdit();
   };
 
   return <Menu items={items} onClick={onClickHandler} />;

@@ -12,6 +12,7 @@ import {
   onIcon,
   onAllowDrop,
   updateTreeData,
+  titleRender,
 } from "./TreeHandlers";
 import { getLevels } from "../../firebase/api";
 const { DirectoryTree } = Tree;
@@ -19,6 +20,7 @@ const { DirectoryTree } = Tree;
 const TreeDirectory = forwardRef((props, ref) => {
   const [data, setData] = useState();
   const [loading, setLoading] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
 
   useEffect(() => {
     const process = async () => {
@@ -33,6 +35,7 @@ const TreeDirectory = forwardRef((props, ref) => {
           title: value.title,
           type: value.type,
           customIcon: value.customIcon,
+          info: null,
         });
       }
 
@@ -44,6 +47,8 @@ const TreeDirectory = forwardRef((props, ref) => {
 
   useImperativeHandle(ref, () => ({
     onLoadData,
+    setIsEdit,
+    setData,
     data,
   }));
 
@@ -58,11 +63,15 @@ const TreeDirectory = forwardRef((props, ref) => {
               title: "Folder Test",
               type: "folder",
               key: `${key}-0`,
+              info: null,
             },
             {
               title: "File Test",
               isLeaf: true,
               key: `${key}-1`,
+              date: "dic. 19 2022, 10:05:00 am",
+              version: 1,
+              info: "Modificacion: DD/MM/AAAA HH:MM:SS pm/am Version: #",
             },
           ])
         );
@@ -86,7 +95,10 @@ const TreeDirectory = forwardRef((props, ref) => {
       onDrop={(info) => {
         setData(onDrop(info, data));
       }}
-      draggable
+      draggable={!isEdit}
+      titleRender={(node) => titleRender(node, isEdit, ref)}
+      expandAction={isEdit ? "false" : "doubleClick"}
+      fieldNames={{ title: "info" }}
     />
   );
 });

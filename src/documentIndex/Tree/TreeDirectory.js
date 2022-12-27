@@ -19,7 +19,7 @@ const { DirectoryTree } = Tree;
 
 const TreeDirectory = forwardRef((props, ref) => {
   const [data, setData] = useState();
-  const [loading, setLoading] = useState(false);
+  const [reload, setReload] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
 
   useEffect(() => {
@@ -54,9 +54,9 @@ const TreeDirectory = forwardRef((props, ref) => {
 
   const onLoadData = ({ key }) =>
     new Promise((resolve) => {
-      setLoading(key);
+      setReload(key);
       setTimeout(() => {
-        setLoading(false);
+        setReload(false);
         setData((node) =>
           updateTreeData(node, key, [
             {
@@ -84,7 +84,7 @@ const TreeDirectory = forwardRef((props, ref) => {
       rootClassName="tree"
       treeData={data}
       icon={({ data: node, expanded }) => {
-        return onIcon(node, expanded, loading);
+          return onIcon(node, expanded, reload);
       }}
       onRightClick={({ node }) => {
         props.onSelectedNode(node);

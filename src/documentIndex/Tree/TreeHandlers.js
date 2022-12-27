@@ -2,6 +2,8 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { getCustomIcon, getIconFolder } from "../../assets/icons";
 import { isOld } from "../../services/dateService";
 
+import TreeInput from "./TreeInput";
+
 export function onDragEnter(info) {
   console.log(info);
 }
@@ -110,4 +112,32 @@ export function updateTreeData(list, key, children) {
     }
   });
   return newData;
+}
+
+export function titleRender(node, isEdit, ref) {
+  const { title, id } = node;
+  if (isEdit === id) {
+    return (
+      <div className="tree_input">
+        <TreeInput
+          value={`${title.toUpperCase()}`}
+          onCancel={() => ref.current.setIsEdit(false)}
+          onSave={(value) => {
+            updateTitle(value, isEdit, ref);
+          }}
+        />
+      </div>
+    );
+  } else {
+    return <span>{title.toUpperCase()}</span>;
+  }
+}
+
+function updateTitle(value, isEdit, ref) {
+  for (const n of ref.current.data) {
+    if (n.key === isEdit) {
+      n.title = value.title;
+    }
+  }
+  ref.current.setIsEdit(false);
 }

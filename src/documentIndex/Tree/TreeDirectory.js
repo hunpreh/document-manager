@@ -5,7 +5,7 @@ import React, {
   forwardRef,
   useImperativeHandle,
 } from "react";
-import { Tree } from "antd";
+import { Spin, Tree } from "antd";
 import {
   onDragEnter,
   onDrop,
@@ -19,6 +19,7 @@ const { DirectoryTree } = Tree;
 
 const TreeDirectory = forwardRef((props, ref) => {
   const [data, setData] = useState();
+  const [loading, setLoading] = useState(true);
   const [reload, setReload] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
 
@@ -43,6 +44,7 @@ const TreeDirectory = forwardRef((props, ref) => {
     };
 
     process();
+    setLoading(false);
   }, []);
 
   useImperativeHandle(ref, () => ({
@@ -80,26 +82,28 @@ const TreeDirectory = forwardRef((props, ref) => {
     });
 
   return (
-    <DirectoryTree
-      rootClassName="tree"
-      treeData={data}
-      icon={({ data: node, expanded }) => {
+    <Spin spinning={loading} tip="Cargando..." delay={500}>
+      <DirectoryTree
+        rootClassName="tree"
+        treeData={data}
+        icon={({ data: node, expanded }) => {
           return onIcon(node, expanded, reload);
-      }}
-      onRightClick={({ node }) => {
-        props.onSelectedNode(node);
-      }}
-      loadData={onLoadData}
-      allowDrop={onAllowDrop}
-      onDragEnter={onDragEnter}
-      onDrop={(info) => {
-        setData(onDrop(info, data));
-      }}
-      draggable={!isEdit}
-      titleRender={(node) => titleRender(node, isEdit, ref)}
-      expandAction={isEdit ? "false" : "doubleClick"}
-      fieldNames={{ title: "info" }}
-    />
+        }}
+        onRightClick={({ node }) => {
+          props.onSelectedNode(node);
+        }}
+        loadData={onLoadData}
+        allowDrop={onAllowDrop}
+        onDragEnter={onDragEnter}
+        onDrop={(info) => {
+          setData(onDrop(info, data));
+        }}
+        draggable={!isEdit}
+        titleRender={(node) => titleRender(node, isEdit, ref)}
+        expandAction={isEdit ? "false" : "doubleClick"}
+        fieldNames={{ title: "info" }}
+      />
+    </Spin>
   );
 });
 

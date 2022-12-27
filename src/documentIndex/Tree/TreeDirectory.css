@@ -28,3 +28,9 @@ span.ant-tree-title {
 .ant-tree .ant-tree-treenode {
   align-items: center;
 }
+
+.tree_input {
+  display: inline-flex;
+  align-items: center;
+  width: 90%;
+}

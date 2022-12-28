@@ -62,16 +62,18 @@ const TreeDirectory = forwardRef((props, ref) => {
         setData((node) =>
           updateTreeData(node, key, [
             {
-              title: "Folder Test",
+              title: "Carpeta",
               type: "folder",
               key: `${key}-0`,
+              id: `${key}-0`,
               info: null,
             },
             {
-              title: "File Test",
+              title: "Archivo",
               isLeaf: true,
               key: `${key}-1`,
-              date: "dic. 19 2022, 10:05:00 am",
+              id: `${key}-1`,
+              date: "dic. 26 2022, 10:05:00 am",
               version: 1,
               info: "Modificacion: DD/MM/AAAA HH:MM:SS pm/am Version: #",
             },

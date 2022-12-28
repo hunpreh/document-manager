@@ -136,7 +136,7 @@ export function titleRender(node, isEdit, ref) {
           value={`${title.toUpperCase()}`}
           onCancel={() => ref.current.setIsEdit(false)}
           onSave={(value) => {
-            updateTitle(value, isEdit, ref);
+            onRename(value, isEdit, ref);
           }}
         />
       </div>
@@ -146,12 +146,8 @@ export function titleRender(node, isEdit, ref) {
   }
 }
 
-function updateTitle(value, isEdit, ref) {
-  for (const n of ref.current.data) {
-    if (n.key === isEdit) {
-      n.title = value.title;
-    }
-  }
+function onRename(value, id, ref) {
+  ref.current.setData((node) => updateTitle(node, id, value.title));
   ref.current.setIsEdit(false);
 }
 
@@ -173,4 +169,20 @@ export function onCreateFolder(id, ref) {
       true
     )
   );
+}
+
+export function updateTitle(list, id, title) {
+  const newData = list.map((node) => {
+    if (node.id === id) {
+      return { ...node, title };
+    } else if (node.children) {
+      return {
+        ...node,
+        children: updateTitle(node.children, id, title),
+      };
+    } else {
+      return node;
+    }
+  });
+  return newData;
 }

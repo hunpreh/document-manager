@@ -1,6 +1,7 @@
 import "./DocumentsIndex.css";
 import React, { Fragment, useState, useCallback, useRef } from "react";
 import { Dropdown } from "antd";
+import { onCreateFolder } from "./Tree/TreeHandlers";
 
 import IconDrawer from "./Drawer/IconDrawer";
 import TreeModal from "./Modal/TreeModal";
@@ -36,6 +37,7 @@ const DocumentIndex = () => {
       onOpenModal={onShowModal}
       onEdit={() => ref.current.setIsEdit(selectedNode.id)}
       onReload={() => ref.current.onLoadData(selectedNode)}
+      onCreateFolder={() => onCreateFolder(selectedNode.id, ref)}
     />
   );
 
@@ -47,10 +49,7 @@ const DocumentIndex = () => {
         node={selectedNode}
         onSaveIcon={updateIcon}
       />
-      <TreeModal 
-        onOpen={showModal}
-        onCloseModal={onShowModal}
-      />
+      <TreeModal onOpen={showModal} onCloseModal={onShowModal} />
       <Dropdown
         overlay={actions}
         trigger={["contextMenu"]}

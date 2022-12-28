@@ -141,3 +141,23 @@ function updateTitle(value, isEdit, ref) {
   }
   ref.current.setIsEdit(false);
 }
+
+export function onCreateFolder(id, ref) {
+  const newid = uuidV4();
+  ref.current.setData((node) =>
+    updateTreeData(
+      node,
+      id,
+      [
+        {
+          title: "Nueva carpeta",
+          type: "folder",
+          key: newid,
+          id: newid,
+          info: null,
+        },
+      ],
+      true
+    )
+  );
+}

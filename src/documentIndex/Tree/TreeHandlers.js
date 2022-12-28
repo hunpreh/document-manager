@@ -95,17 +95,29 @@ export function onAllowDrop({ dragNode, dropNode, dropPosition }) {
     return true;
 }
 
-export function updateTreeData(list, key, children) {
+export function updateTreeData(list, id, children, newItem = false) {
   const newData = list.map((node) => {
-    if (node.key === key) {
-      return {
-        ...node,
-        children,
-      };
+    if (node.id === id) {
+      // Para inyectar carpeta o archivo
+      if (node.children && newItem) {
+        const tmp = [...node.children];
+        tmp.push(...children);
+        return {
+          ...node,
+          children: updateTreeData(tmp, id, children),
+        };
+      } else {
+        // Regresa lo que descargue de la BD (reload)
+        return {
+          ...node,
+          children,
+        };
+      }
     } else if (node.children) {
+      // Reiteracion para los nodos hijos
       return {
         ...node,
-        children: updateTreeData(node.children, key, children),
+        children: updateTreeData(node.children, id, children, newItem),
       };
     } else {
       return node;

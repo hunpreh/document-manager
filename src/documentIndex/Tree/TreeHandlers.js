@@ -186,3 +186,25 @@ export function updateTitle(list, id, title) {
   });
   return newData;
 }
+
+export function onDelete(list, id) {
+  const data = [...list];
+  const loop = (data, key, callback) => {
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].key === key) {
+        return callback(data[i], i, data);
+      }
+      if (data[i].children) {
+        loop(data[i].children, key, callback);
+      }
+    }
+  };
+
+  // let deletedNode;
+  loop(data, id, (item, index, arr) => {
+    arr.splice(index, 1);
+    // deletedNode = item;
+  });
+
+  return data;
+}

@@ -1,6 +1,5 @@
-import React from "react";
-// import { useHistory } from "react-router-dom";
-import { Menu } from "antd";
+import React, { useState, useCallback } from "react";
+import { Menu, Popconfirm } from "antd";
 import {
   InfoCircleTwoTone,
   EditTwoTone,
@@ -15,11 +14,11 @@ import {
   FolderTwoTone,
   SettingTwoTone,
 } from "@ant-design/icons";
-// import { v4 as uuidV4 } from "uuid";
 
 const DropdownMenu = (props) => {
-  //const history = useHistory();
   const { title, type, isLeaf } = props.node;
+  const [open, setOpen] = useState(false);
+  const [confirmLoading, setConfirmLoading] = useState(false);
   let filterType = type;
   if (isLeaf) filterType = "file";
 
@@ -107,13 +106,44 @@ const DropdownMenu = (props) => {
 
   const onClickHandler = ({ key }) => {
     console.log("Click en:", key);
-    if(key === "personalizar") props.onOpenDrawer();
-    if(key === "actualizar") props.onReload();
-    if(key === "renombrar") props.onEdit();
-    if(key === "carpeta") props.onCreateFolder();
+    if (key === "personalizar") props.onOpenDrawer();
+    if (key === "actualizar") props.onReload();
+    if (key === "renombrar") props.onEdit();
+    if (key === "carpeta") props.onCreateFolder();
+    if (key === "eliminar") onShowPopconfirm();
   };
 
-  return <Menu items={items} onClick={onClickHandler} />;
+  const handleOk = () => {
+    setConfirmLoading(true);
+    setTimeout(() => {
+      props.onDelete()
+      onShowPopconfirm();
+      setConfirmLoading(false);
+    }, 2000);
+  };
+
+  const onShowPopconfirm = useCallback(() => {
+    setOpen((show) => !show);
+  }, []);
+
+  return (
+    <Popconfirm
+      icon={<DeleteTwoTone twoToneColor="#eb2f96" />}
+      title={`¿Estás seguro que quieres eliminar ${title}?`}
+      placement="topLeft"
+      open={open}
+      okText="Eliminar"
+      cancelText="Cancelar"
+      onConfirm={handleOk}
+      okButtonProps={{
+        type: "danger",
+        loading: confirmLoading,
+      }}
+      onCancel={onShowPopconfirm}
+    >
+      <Menu items={items} onClick={onClickHandler} />
+    </Popconfirm>
+  );
 };
 
 export default DropdownMenu;

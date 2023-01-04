@@ -110,6 +110,7 @@ const DropdownMenu = (props) => {
     if (key === "actualizar") props.onReload();
     if (key === "renombrar") props.onEdit();
     if (key === "carpeta") props.onCreateFolder();
+    if (key === "documento") props.onCreateFile();
     if (key === "eliminar") onShowPopconfirm();
   };
 

@@ -1,6 +1,6 @@
 import { LoadingOutlined } from "@ant-design/icons";
 import { getCustomIcon, getIconFolder } from "../../assets/icons";
-import { isOld } from "../../services/dateService";
+import { isOld, getCurrentDate } from "../../services/dateService";
 import { v4 as uuidV4 } from "uuid";
 
 import TreeInput from "./TreeInput";
@@ -164,6 +164,29 @@ export function onCreateFolder(id, ref) {
           key: newid,
           id: newid,
           info: null,
+        },
+      ],
+      true
+    )
+  );
+}
+
+export function onCreateFile(id, ref) {
+  const newid = uuidV4();
+  const date = getCurrentDate()
+  ref.current.setData((node) =>
+    updateTreeData(
+      node,
+      id,
+      [
+        {
+          title: "Nuevo archivo",
+          isLeaf: true,
+          key: newid,
+          id: newid,
+          date: date,
+          version: 1,
+          info: `Modificacion: ${date} Version: 1`,
         },
       ],
       true

@@ -33,7 +33,7 @@ const DropdownMenu = (props) => {
     {
       key: "referencia",
       icon: <InfoCircleTwoTone />,
-      label: `Documentos de referencia de ${title}`,
+      label: `Documentos de referencia de "${title}"`,
       type: ["file"],
     },
     { label: "", key: null, disabled: true, type: ["nivel", "file"] },
@@ -106,6 +106,8 @@ const DropdownMenu = (props) => {
     if (key === "renombrar") props.onEdit();
     if (key === "carpeta") props.onCreateFolder();
     if (key === "documento") props.onCreateFile();
+    if (key === "propiedades") props.onOpenModal("propiedades");
+    if (key === "referencia") props.onOpenModal("referencia");
     if (key === "eliminar") onShowPopconfirm();
   };
 

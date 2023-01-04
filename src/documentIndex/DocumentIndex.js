@@ -18,8 +18,8 @@ const DocumentIndex = () => {
     setShowDrawer((show) => !show);
   }, []);
 
-  const onShowModal = useCallback(() => {
-    setShowModal((show) => !show);
+  const onShowModal = useCallback((newShow) => {
+    setShowModal(newShow);
   }, []);
 
   const updateIcon = (icon) => {
@@ -53,7 +53,11 @@ const DocumentIndex = () => {
         node={selectedNode}
         onSaveIcon={updateIcon}
       />
-      <TreeModal onOpen={showModal} onCloseModal={onShowModal} />
+      <TreeModal
+        node={selectedNode}
+        onOpen={showModal}
+        onCloseModal={onShowModal}
+      />
       <Dropdown
         overlay={actions}
         trigger={["contextMenu"]}

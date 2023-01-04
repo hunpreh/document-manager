@@ -13,6 +13,7 @@ import {
   FileTwoTone,
   FolderTwoTone,
   SettingTwoTone,
+  TrademarkCircleTwoTone
 } from "@ant-design/icons";
 
 const DropdownMenu = (props) => {
@@ -26,7 +27,7 @@ const DropdownMenu = (props) => {
     {
       key: "personalizar",
       icon: <SettingTwoTone />,
-      label: `Personalizar ${title}`,
+      label: `Personalizar "${title}"`,
       type: ["nivel"],
     },
     {
@@ -56,22 +57,16 @@ const DropdownMenu = (props) => {
       ],
     },
     {
-      key: "renombrar",
+      key: "editar",
       icon: <EditTwoTone />,
+      label: "Editar",
+      type: ["file"],
+    },
+    {
+      key: "renombrar",
+      icon: <TrademarkCircleTwoTone />,
       label: "Renombrar",
       type: ["nivel", "folder", "file"],
-    },
-    {
-      key: "pegar",
-      icon: <SnippetsTwoTone />,
-      label: "Pegar",
-      type: ["folder"],
-    },
-    {
-      key: "copiar",
-      icon: <CopyTwoTone />,
-      label: "Copiar",
-      type: ["file"],
     },
     {
       key: "impresion",
@@ -89,7 +84,7 @@ const DropdownMenu = (props) => {
     {
       key: "eliminar",
       icon: <DeleteTwoTone twoToneColor="#eb2f96" />,
-      label: `Eliminar ${title}`,
+      label: `Eliminar "${title}"`,
       type: ["nivel", "folder", "file"],
     },
   ];

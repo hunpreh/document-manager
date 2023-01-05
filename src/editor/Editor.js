@@ -8,9 +8,9 @@ import useHttp from "../hooks/use-http";
 import EditorHeader from "./EditorHeader";
 import CKEditorComponent from "./CKEditorComponent";
 
-const Editor = (props) => {
+const Editor = () => {
   const [content, setContent] = useState();
-  const [version, setVersion] = useState("1.0");
+  const [version, setVersion] = useState(1);
   const [date, setDate] = useState();
   const [title, setTitle] = useState();
   const [id, setId] = useState();
@@ -18,7 +18,11 @@ const Editor = (props) => {
   const location = useLocation();
 
   const { sendRequest: saveDoc, status: statusSaved } = useHttp(saveDocument);
-  const { sendRequest: getDoc, status: statusGetDoc, data: docData } = useHttp(getDocument);
+  const {
+    sendRequest: getDoc,
+    status: statusGetDoc,
+    data,
+  } = useHttp(getDocument);
 
   useEffect(() => {
     const process = async () => {
@@ -40,9 +44,17 @@ const Editor = (props) => {
 
   useEffect(() => {
     if (statusGetDoc === "completed") {
-      setTitle(docData.title);
-      setVersion(docData.version);
-      setContent(docData.content);
+      if (data === null) {
+        console.log("no data");
+      } else {
+        console.log("setting");
+        setTitle(data.title);
+        setVersion(data.version);
+        setContent(data.content);
+      }
+      console.log(data);
+      console.log("GETDOC");
+
       setLoading(false);
     }
   }, [statusGetDoc]);
@@ -73,7 +85,7 @@ const Editor = (props) => {
   if (loading) {
     return (
       <div className="loading">
-        <Spin size="large"/>
+        <Spin size="large" />
       </div>
     );
   }
@@ -86,7 +98,7 @@ const Editor = (props) => {
         title={title}
       />
       <CKEditorComponent
-        isNew={!docData}
+        isNew={!data}
         onChange={(event, editor) => {
           const data = editor.getData();
           setContent(data);

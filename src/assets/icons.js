@@ -41,6 +41,10 @@ import {
   ThunderboltFilled,
   FolderOpenFilled,
   FileFilled,
+  FileWordTwoTone,
+  FileExcelTwoTone,
+  FilePdfTwoTone,
+  FileUnknownTwoTone,
 } from "@ant-design/icons";
 
 const data = [
@@ -185,4 +189,13 @@ export function getIconFolder(isLeaf, isOld, expanded) {
     return <FileFilled style={{ color: isOld ? "#874D00" : "#1890FF" }} />;
   if (expanded) return <FolderOpenFilled style={{ color: "#FADB14" }} />;
   return <FolderFilled style={{ color: "#FADB14" }} />;
+}
+
+export function getIconFile({ name }) {
+  const type = name.split(".").pop();
+  if (type === "docx" || type === "doc") return <FileWordTwoTone />;
+  else if (type === "xlsx" || type === "xls" || type === "xlsm")
+    return <FileExcelTwoTone twoToneColor="#52c41a" />;
+  else if (type === "pdf") return <FilePdfTwoTone twoToneColor="#eb2f96" />;
+  else return <FileUnknownTwoTone twoToneColor="#002766" />;
 }

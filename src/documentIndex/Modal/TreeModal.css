@@ -1,0 +1,18 @@
+.list_switch__modal {
+  margin-top: 10px;
+}
+
+.document_list__modal {
+  margin: 10px 0;
+  max-height: 150px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.upload_btn__modal {
+    margin-top: 15px;
+}
+
+.ant-upload-drag-icon {
+  margin: 0 !important;
+}

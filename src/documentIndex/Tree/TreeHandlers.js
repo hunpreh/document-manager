@@ -6,7 +6,7 @@ import { v4 as uuidV4 } from "uuid";
 import TreeInput from "./TreeInput";
 
 export function onDragEnter(info) {
-  console.log(info);
+  // console.log(info);
 }
 
 export function onDrop(info, gData) {
@@ -161,6 +161,7 @@ export function onCreateFolder(id, ref) {
         {
           title: "Nueva carpeta",
           type: "folder",
+          category: "general",
           key: newid,
           id: newid,
           info: null,

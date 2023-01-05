@@ -64,6 +64,7 @@ const TreeDirectory = forwardRef((props, ref) => {
             {
               title: "Carpeta",
               type: "folder",
+              category: "registros",
               key: `${key}-0`,
               id: `${key}-0`,
               info: null,

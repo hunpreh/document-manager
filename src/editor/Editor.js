@@ -2,6 +2,7 @@ import "./Editor.css";
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Spin } from "antd";
+import { getCurrentDate } from "../services/dateService";
 import { saveDocument, getDocument } from "../firebase/api";
 import useHttp from "../hooks/use-http";
 
@@ -28,7 +29,7 @@ const Editor = () => {
     const process = async () => {
       const id = location.pathname.split("/").filter((i) => i.length > 32);
       setId(...id);
-      getCurrentDate();
+      setDate(getCurrentDate())
       getDoc(id);
     };
 
@@ -68,18 +69,6 @@ const Editor = () => {
     };
     console.log("Guardar", documentData);
     saveDoc(id, documentData);
-  };
-
-  const getCurrentDate = () => {
-    const d = new Date();
-    const day = d.getDate();
-    const month = d.getMonth() + 1;
-    const year = d.getFullYear();
-    if (month < 10) {
-      setDate(`${day}-0${month}-${year}`);
-    } else {
-      setDate(`${day}-${month}-${year}`);
-    } // DD-MM-YYYY
   };
 
   if (loading) {

@@ -3,13 +3,11 @@ import { Menu, Popconfirm } from "antd";
 import {
   InfoCircleTwoTone,
   EditTwoTone,
-  SnippetsTwoTone,
   DeleteTwoTone,
   ReloadOutlined,
   PlusCircleTwoTone,
   PrinterTwoTone,
   QuestionCircleTwoTone,
-  CopyTwoTone,
   FileTwoTone,
   FolderTwoTone,
   SettingTwoTone,

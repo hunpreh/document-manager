@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, child, get, set } from "firebase/database";
+import { getStorage } from "firebase/storage";
 import { notification } from "antd";
 
 const openNotification = (type) => {
@@ -56,7 +57,7 @@ export async function getDocument(documentID) {
       if (snapshot.exists()) {
         document = snapshot.val();
       } else {
-        document = null
+        document = null;
       }
     })
     .catch((error) => {
@@ -95,4 +96,9 @@ export async function updateIcon(levelID, iconData) {
       openNotification("error");
       console.dir(error);
     });
+}
+
+export function getImageStorage() {
+  const storage = getStorage(app);
+  return storage;
 }

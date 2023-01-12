@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Menu, Popconfirm } from "antd";
 import {
   InfoCircleTwoTone,
@@ -15,9 +15,24 @@ import {
 } from "@ant-design/icons";
 
 const DropdownMenu = (props) => {
-  const { title, type, isLeaf } = props.node;
+  
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
+  const [title, setTitle] = useState("Titulo");
+  const [type, setType] = useState();
+  const [isLeaf, setLeaf] = useState();
+
+  useEffect(() => {
+    try {
+      const { title, type, isLeaf } = props.node;
+      setTitle(title);
+      setType(type);
+      setLeaf(isLeaf);
+    } catch (error) {
+      
+    }
+  }, [props.node])
+
   let filterType = type;
   if (isLeaf) filterType = "file";
 

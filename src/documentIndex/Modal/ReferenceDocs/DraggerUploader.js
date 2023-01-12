@@ -13,25 +13,13 @@ const DraggerUploader = (props) => {
   const draggerProps = {
     name: "file",
     multiple: true,
+    fileList: uploadList,
     onRemove: (file) => {
       const index = uploadList.map((f) => f.uid).indexOf(file.uid);
       const newFileList = uploadList.slice();
       newFileList.splice(index, 1);
       setUploadList(newFileList);
       return { files: newFileList };
-    },
-    onChange(info) {
-      const { status } = info.file;
-      if (status !== "uploading") {
-        // console.log(info.file, info.fileList);
-      }
-      if (status === "done") {
-        message.success(
-          `El archivo "${info.file.name}" fue cargado correctamente`
-        );
-      } else if (status === "error") {
-        message.error(`Error en la carga de "${info.file.name}"`);
-      }
     },
     beforeUpload: (file) => {
       const { name } = file;
@@ -49,24 +37,56 @@ const DraggerUploader = (props) => {
         return Upload.LIST_IGNORE;
       }
 
-      console.log(file);
       setUploadList([...uploadList, file]);
       return false;
     },
   };
 
+  const uploadAnimation = (arr) => {
+    let time = 0,
+      x = setInterval(function () {
+        props.onUpload(
+          arr.map((i) => {
+            return {
+              name: i.name,
+              uid: i.uid,
+              status: "uploading",
+              percent: time,
+            };
+          })
+        );
+        ++time;
+        if (time === 100) {
+          props.onUpload(
+            arr.map((i) => {
+              return {
+                name: i.name,
+                uid: i.uid,
+                status: "done",
+                url: "url or id",
+              };
+            })
+          );
+          clearInterval(x);
+        }
+      }, 10);
+  };
+
   const uploadFiles = () => {
     setUploading(true);
-    setTimeout(() => {
-      setUploadList([]);
-      setUploading(false);
-      props.onUpload(uploadList)
-    }, 3000);
+    //API PARA SUBIR EL ARCHIVO A BD Y REGRESA LA URL O ID CON EL QUE SE GUARDO PARA PODER ACCEDER
+    uploadAnimation(
+      uploadList.map((i) => {
+        return { name: i.name, uid: i.uid };
+      })
+    );
+    setUploadList([]);
+    setUploading(false);
   };
 
   return (
     <Fragment>
-      <Dragger fileList={uploadList} {...draggerProps}>
+      <Dragger {...draggerProps}>
         <p className="ant-upload-drag-icon">
           <InboxOutlined />
         </p>
@@ -74,7 +94,9 @@ const DraggerUploader = (props) => {
           Haz click o arrastra tus archivos a esta área para cargarlos al
           sistema.
         </p>
-        <p className="ant-upload-hint">Archivos permitidos: .pdf .docx .xlsx</p>
+        <p className="ant-upload-hint">
+          Archivos permitidos: .doc .docx .xls .xlsx .pdf
+        </p>
       </Dragger>
       <Button
         type="primary"

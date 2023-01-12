@@ -8,16 +8,19 @@ const dummyData = [
     uid: "-1",
     name: "Word.docx",
     status: "done",
+    url: 'url',
   },
   {
     uid: "-2",
     name: "PDF.pdf",
     status: "done",
+    url: 'url',
   },
   {
     uid: "-3",
     name: "Excel.xlsx",
     status: "done",
+    url: 'url',
   },
 ];
 

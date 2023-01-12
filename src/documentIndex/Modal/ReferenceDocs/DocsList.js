@@ -21,12 +21,10 @@ const DocsList = (props) => {
         <Upload
           listType={fileView ? "picture-card" : "picture"}
           fileList={props.fileList}
-          onDownload={() => {
-            console.log("DESCARGA DE DOCUMENTO");
-          }}
+          onPreview={(e) => {console.log(e)}}
           onChange={props.onChange}
           iconRender={getIconFile}
-          showUploadList={{ showPreviewIcon: false, showDownloadIcon: true }}
+          isImageUrl={() => {return false}}
         />
       </div>
     </Fragment>

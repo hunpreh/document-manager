@@ -30,7 +30,7 @@ span.ant-tree-title {
 }
 
 .tree_input {
+  position: relative;
   display: inline-flex;
   align-items: center;
-  width: 90%;
 }

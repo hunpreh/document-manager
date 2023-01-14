@@ -1,9 +1,11 @@
+import { v4 as uuidV4 } from "uuid";
+import { Typography } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { getCustomIcon, getIconFolder } from "../../assets/icons";
 import { isOld, getCurrentDate } from "../../services/dateService";
-import { v4 as uuidV4 } from "uuid";
+import { codeVerify, titleVerify } from "../../utils/regex_validators";
 
-import TreeInput from "./TreeInput";
+const { Paragraph } = Typography;
 
 export function onDragEnter(info) {
   // console.log(info);
@@ -129,25 +131,33 @@ export function updateTreeData(list, id, children, newItem = false) {
 
 export function titleRender(node, isEdit, ref) {
   const { title, id } = node;
-  if (isEdit === id) {
-    return (
-      <div className="tree_input">
-        <TreeInput
-          value={`${title.toUpperCase()}`}
-          onCancel={() => ref.current.setIsEdit(false)}
-          onSave={(value) => {
-            onRename(value, isEdit, ref);
-          }}
-        />
-      </div>
-    );
-  } else {
-    return <span>{title.toUpperCase()}</span>;
-  }
+
+  // const onChangeCode = (codeStr) => {
+  //   if (codeVerify(codeStr)) setCode(codeStr);
+  // };
+
+  const onChangeTitle = (titleStr) => {
+    if (titleVerify(titleStr)) onRename(titleStr, isEdit, ref);
+  };
+
+  return (
+    <div className="tree_input">
+      <Paragraph
+        style={{ margin: 0, minWidth: 600 }}
+        editable={{
+          editing: isEdit === id ? true : false,
+          maxLength: 32,
+          triggerType: "text",
+          onChange: onChangeTitle,
+          onEnd: () => ref.current.setIsEdit(false),
+        }}
+      >{`${title.toUpperCase()}`}</Paragraph>
+    </div>
+  );
 }
 
-function onRename(value, id, ref) {
-  ref.current.setData((node) => updateTitle(node, id, value.title));
+function onRename(title, id, ref) {
+  ref.current.setData((node) => updateTitle(node, id, title));
   ref.current.setIsEdit(false);
 }
 
@@ -174,7 +184,7 @@ export function onCreateFolder(id, ref) {
 
 export function onCreateFile(id, ref) {
   const newid = uuidV4();
-  const date = getCurrentDate()
+  const date = getCurrentDate();
   ref.current.setData((node) =>
     updateTreeData(
       node,

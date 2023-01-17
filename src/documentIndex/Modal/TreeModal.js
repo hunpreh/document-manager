@@ -16,7 +16,7 @@ const TreeModal = (props) => {
     try {
       setTitle(props.node.title);
       setLeaf(props.node.isLeaf);
-      setCategory(props.node.category)
+      setCategory(props.node.info)
       if (props.onOpen === "referencia") setOption(true);
     } catch (error) {}
   }, [props.onOpen]);

@@ -11,10 +11,10 @@ const GeneralOptions = ({category}) => {
   return (
     <Radio.Group onChange={onChange} value={value}>
       <Space direction="vertical">
-        <Radio value={"general"}>General</Radio>
-        <Radio value={"registros"}>Registros</Radio>
-        <Radio value={"cancelados"}>Cancelados</Radio>
-        <Radio value={"derogados"}>Derogados</Radio>
+        <Radio value={"GENERAL"}>General</Radio>
+        <Radio value={"REGISTROS"}>Registros</Radio>
+        <Radio value={"CANCELADOS"}>Cancelados</Radio>
+        <Radio value={"DEROGADOS"}>Derogados</Radio>
       </Space>
     </Radio.Group>
   );

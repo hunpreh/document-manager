@@ -171,15 +171,15 @@ export function onCreateFolder(id, ref) {
         {
           title: "Nueva carpeta",
           type: "folder",
-          category: "general",
           key: newid,
           id: newid,
-          info: null,
+          info: "GENERAL",
         },
       ],
       true
     )
   );
+  ref.current.setIsEdit(newid);
 }
 
 export function onCreateFile(id, ref) {

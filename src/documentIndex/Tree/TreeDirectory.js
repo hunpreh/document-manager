@@ -64,19 +64,19 @@ const TreeDirectory = forwardRef((props, ref) => {
             {
               title: "Carpeta",
               type: "folder",
-              category: "registros",
               key: `${key}-0`,
               id: `${key}-0`,
-              info: null,
+              info: "GENERAL",
             },
             {
               title: "Archivo",
+              code: "ABCDEF-000",
               isLeaf: true,
               key: `${key}-1`,
               id: `${key}-1`,
               date: "dic. 26 2022, 10:05:00 am",
               version: 1,
-              info: "Modificacion: DD/MM/AAAA HH:MM:SS pm/am Version: #",
+              info: `Modificacion: DD/MM/AAAA HH:MM:SS pm/am\nVersion: #`,
             },
           ])
         );

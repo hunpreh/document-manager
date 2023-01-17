@@ -135,7 +135,10 @@ export function titleRender(node, isEdit, ref) {
   const { title, id, code, isLeaf } = node;
 
   const onChangeTitle = (titleStr) => {
-    if (titleVerify(titleStr)) onRename(titleStr, isEdit, ref);
+    if (titleVerify(titleStr)) {
+      ref.current.setData((node) => updateTitle(node, id, titleStr));
+      ref.current.setIsEdit(false);
+    }
   };
 
   return (
@@ -154,11 +157,6 @@ export function titleRender(node, isEdit, ref) {
       }${title.toUpperCase()}`}</Paragraph>
     </div>
   );
-}
-
-function onRename(title, id, ref) {
-  ref.current.setData((node) => updateTitle(node, id, title));
-  ref.current.setIsEdit(false);
 }
 
 export function onCreateFolder(id, ref) {
@@ -200,7 +198,7 @@ export function onCreateFile(id, ref) {
             id: newid,
             date: date,
             version: 0,
-            info: `Modificacion: ${date}\nVersion: 0`,
+            info: `Modificación: ${date}\nVersión: 0`,
           },
         ],
         true

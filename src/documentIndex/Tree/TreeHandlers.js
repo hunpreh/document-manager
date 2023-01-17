@@ -1,9 +1,11 @@
 import { v4 as uuidV4 } from "uuid";
-import { Typography } from "antd";
+import { Typography, Modal } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { getCustomIcon, getIconFolder } from "../../assets/icons";
 import { isOld, getCurrentDate } from "../../services/dateService";
-import { codeVerify, titleVerify } from "../../utils/regex_validators";
+import { titleVerify } from "../../utils/regex_validators";
+
+import InputCode from "../Modal/InputCode";
 
 const { Paragraph } = Typography;
 
@@ -130,11 +132,7 @@ export function updateTreeData(list, id, children, newItem = false) {
 }
 
 export function titleRender(node, isEdit, ref) {
-  const { title, id } = node;
-
-  // const onChangeCode = (codeStr) => {
-  //   if (codeVerify(codeStr)) setCode(codeStr);
-  // };
+  const { title, id, code, isLeaf } = node;
 
   const onChangeTitle = (titleStr) => {
     if (titleVerify(titleStr)) onRename(titleStr, isEdit, ref);
@@ -145,13 +143,15 @@ export function titleRender(node, isEdit, ref) {
       <Paragraph
         style={{ margin: 0, minWidth: 600 }}
         editable={{
-          editing: isEdit === id ? true : false,
+          editing: isEdit === id,
           maxLength: 32,
           triggerType: "text",
           onChange: onChangeTitle,
           onEnd: () => ref.current.setIsEdit(false),
         }}
-      >{`${title.toUpperCase()}`}</Paragraph>
+      >{`${
+        isLeaf && !isEdit ? code + " - " : ""
+      }${title.toUpperCase()}`}</Paragraph>
     </div>
   );
 }
@@ -185,24 +185,45 @@ export function onCreateFolder(id, ref) {
 export function onCreateFile(id, ref) {
   const newid = uuidV4();
   const date = getCurrentDate();
-  ref.current.setData((node) =>
-    updateTreeData(
-      node,
-      id,
-      [
-        {
-          title: "Nuevo archivo",
-          isLeaf: true,
-          key: newid,
-          id: newid,
-          date: date,
-          version: 1,
-          info: `Modificacion: ${date} Version: 1`,
-        },
-      ],
-      true
-    )
-  );
+
+  const insertFile = (code = "CODIGO-000") => {
+    ref.current.setData((node) =>
+      updateTreeData(
+        node,
+        id,
+        [
+          {
+            title: "Nuevo archivo",
+            code: code,
+            isLeaf: true,
+            key: newid,
+            id: newid,
+            date: date,
+            version: 0,
+            info: `Modificacion: ${date}\nVersion: 0`,
+          },
+        ],
+        true
+      )
+    );
+    ref.current.setIsEdit(newid);
+  };
+
+  Modal.info({
+    title: "Introduce el código del documento:",
+    content: (
+      <InputCode
+        onInsertFile={(code) => {
+          insertFile(code);
+        }}
+        onClose={Modal.destroyAll}
+      />
+    ),
+    icon: null,
+    closable: true,
+    bodyStyle: { padding: "20px 32px 0px" },
+    okButtonProps: { style: { display: "none" } },
+  });
 }
 
 export function updateTitle(list, id, title) {

@@ -5,7 +5,7 @@ import { getCustomIcon, getIconFolder } from "../../assets/icons";
 import { isOld, getCurrentDate } from "../../services/dateService";
 import { titleVerify } from "../../utils/regex_validators";
 
-import InputCode from "../Modal/InputCode";
+import InputCode from "../Modal/InputCode/InputCode";
 
 const { Paragraph } = Typography;
 

@@ -1,39 +1,48 @@
-import "./TreeModal.css"
+import "./TreeModal.css";
 import { Modal, Tabs } from "antd";
 import React, { useState, useEffect } from "react";
 
-import GeneralOptions from "./GeneralOptions";
-import SecurityPermissions from "./SecurityPermissions";
+import GeneralOptions from "./GeneralOptions/GeneralOptions";
+import SecurityPermissions from "./SecurityPermissions/SecurityPermissions";
 import ReferenceDocs from "./ReferenceDocs/ReferenceDocs";
 
-const TreeModal = (props) => {
+const modalStyle = {
+  paddingTop: 0,
+  maxHeight: "450px",
+  overflowY: "auto",
+  overflowX: "hidden",
+};
+
+const TreeModal = ({
+  node = {},
+  onOpen = false,
+  onCloseModal = () => {},
+  onUpdateCategory = () => {},
+}) => {
   const [title, setTitle] = useState();
   const [isLeaf, setLeaf] = useState();
   const [option, setOption] = useState();
   const [category, setCategory] = useState();
 
   useEffect(() => {
-    try {
-      setTitle(props.node.title);
-      setLeaf(props.node.isLeaf);
-      setCategory(props.node.info)
-      if (props.onOpen === "referencia") setOption(true);
-    } catch (error) {}
-  }, [props.onOpen]);
+    setTitle(node.title);
+    setLeaf(node.isLeaf);
+    setCategory(node.info);
+    if (onOpen === "referencia") setOption(true);
+  }, [onOpen]);
 
   return (
     <Modal
-      title={option ? `Documentos de referencia de "${title}"` : `Propiedades de "${title}"`}
-      open={props.onOpen}
+      title={
+        option
+          ? `Documentos de referencia de "${title}"`
+          : `Propiedades de "${title}"`
+      }
+      open={onOpen}
       width={620}
-      bodyStyle={{
-        paddingTop: 0,
-        maxHeight: "450px",
-        overflowY: "auto",
-        overflowX: "hidden",
-      }}
+      bodyStyle={modalStyle}
       onCancel={() => {
-        props.onCloseModal(false);
+        onCloseModal(false);
         setOption(false);
       }}
       destroyOnClose
@@ -44,7 +53,14 @@ const TreeModal = (props) => {
         <Tabs>
           {!isLeaf && (
             <Tabs.TabPane tab="Categoria" key="1">
-              <GeneralOptions category={category} />
+              <GeneralOptions
+                category={category}
+                updateCategory={onUpdateCategory}
+                closeModal={() => {
+                  onCloseModal(false);
+                  setOption(false);
+                }}
+              />
             </Tabs.TabPane>
           )}
           <Tabs.TabPane tab="Seguridad" key="2">

@@ -52,7 +52,7 @@ const IconDrawer = ({
       onClose={onClose}
       open={onOpen}
     >
-      <CustomIcon
+      {onOpen && <CustomIcon
         onChangeColor={(color) => {
           setColor(color);
         }}
@@ -63,7 +63,7 @@ const IconDrawer = ({
         iconColor={color}
         iconIndex={index}
         iconSelected={selectedIcon}
-      />
+      />}
     </Drawer>
   );
 };

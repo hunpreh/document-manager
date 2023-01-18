@@ -248,6 +248,22 @@ export function updateTitle(list, id, title) {
   return newData;
 }
 
+export function onUpdateCategory(list, id, info) {
+  const newData = list.map((node) => {
+    if (node.id === id) {
+      return { ...node, info };
+    } else if (node.children) {
+      return {
+        ...node,
+        children: onUpdateCategory(node.children, id, info),
+      };
+    } else {
+      return node;
+    }
+  });
+  return newData;
+}
+
 export function onDelete(list, id) {
   const data = [...list];
   const loop = (data, key, callback) => {

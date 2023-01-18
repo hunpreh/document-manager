@@ -1,3 +1,11 @@
+.center {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
 .list_switch__modal {
   margin-top: 10px;
 }

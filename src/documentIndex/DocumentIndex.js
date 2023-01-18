@@ -6,6 +6,7 @@ import {
   onCreateFile,
   onDelete,
   onUpdateIcon,
+  onUpdateCategory,
 } from "./Tree/TreeHandlers";
 
 import IconDrawer from "./Drawer/IconDrawer";
@@ -80,6 +81,11 @@ const DocumentIndex = () => {
         node={selectedNode}
         onOpen={showModal}
         onCloseModal={onShowModal}
+        onUpdateCategory={(category) =>
+          ref.current.setData((node) =>
+            onUpdateCategory(node, selectedNode.id, category)
+          )
+        }
       />
       <Dropdown
         overlay={actions}

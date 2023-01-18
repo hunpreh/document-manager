@@ -11,30 +11,28 @@ import {
   FileTwoTone,
   FolderTwoTone,
   SettingTwoTone,
-  TrademarkCircleTwoTone
+  TrademarkCircleTwoTone,
 } from "@ant-design/icons";
 
-const DropdownMenu = (props) => {
-  
+const DropdownMenu = ({
+  node = {},
+  onOpenDrawer = () => {},
+  onOpenModal = () => {},
+  onEdit = () => {},
+  onReload = () => {},
+  onCreateFolder = () => {},
+  onCreateFile = () => {},
+  onDelete = () => {},
+}) => {
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
-  const [title, setTitle] = useState("Titulo");
-  const [type, setType] = useState();
-  const [isLeaf, setLeaf] = useState();
+  const [title, setTitle] = useState(node.title);
+  const [type, setType] = useState(node.type);
 
   useEffect(() => {
-    try {
-      const { title, type, isLeaf } = props.node;
-      setTitle(title);
-      setType(type);
-      setLeaf(isLeaf);
-    } catch (error) {
-      
-    }
-  }, [props.node])
-
-  let filterType = type;
-  if (isLeaf) filterType = "file";
+    setTitle(node.title);
+    setType(node.isLeaf ? "file" : node.type);
+  }, [node]);
 
   const options = [
     {
@@ -102,9 +100,9 @@ const DropdownMenu = (props) => {
     },
   ];
 
-  const items = options.filter((i) => i.type.some((t) => t === filterType));
+  const items = options.filter((i) => i.type.some((t) => t === type));
 
-  if (filterType === "folder") {
+  if (type === "folder") {
     items[1].children.push({
       key: "documento",
       icon: <FileTwoTone />,
@@ -114,20 +112,20 @@ const DropdownMenu = (props) => {
 
   const onClickHandler = ({ key }) => {
     console.log("Click en:", key);
-    if (key === "personalizar") props.onOpenDrawer();
-    if (key === "actualizar") props.onReload();
-    if (key === "renombrar") props.onEdit();
-    if (key === "carpeta") props.onCreateFolder();
-    if (key === "documento") props.onCreateFile();
-    if (key === "propiedades") props.onOpenModal("propiedades");
-    if (key === "referencia") props.onOpenModal("referencia");
+    if (key === "personalizar") onOpenDrawer();
+    if (key === "actualizar") onReload();
+    if (key === "renombrar") onEdit();
+    if (key === "carpeta") onCreateFolder();
+    if (key === "documento") onCreateFile();
+    if (key === "propiedades") onOpenModal("propiedades");
+    if (key === "referencia") onOpenModal("referencia");
     if (key === "eliminar") onShowPopconfirm();
   };
 
   const handleOk = () => {
     setConfirmLoading(true);
     setTimeout(() => {
-      props.onDelete()
+      onDelete();
       onShowPopconfirm();
       setConfirmLoading(false);
     }, 2000);

@@ -6,13 +6,18 @@ import { getIcon } from "../../assets/icons";
 
 import CustomIcon from "./CustomIcon/CustomIcon";
 
+const icon = {
+  color: "#000000",
+  index: 0,
+};
+
 const IconDrawer = ({
   node = {},
   onOpen = false,
   onClose = () => {},
   onSaveIcon = () => {},
 }) => {
-  const { customIcon, id } = node;
+  const { customIcon = icon, id } = node;
   const [color, setColor] = useState(customIcon.color);
   const [index, setIndex] = useState(customIcon.index);
   const [selectedIcon, setSelectedIcon] = useState();

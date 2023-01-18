@@ -111,15 +111,15 @@ const DropdownMenu = ({
   }
 
   const onClickHandler = ({ key }) => {
-    console.log("Click en:", key);
     if (key === "personalizar") onOpenDrawer();
-    if (key === "actualizar") onReload();
-    if (key === "renombrar") onEdit();
-    if (key === "carpeta") onCreateFolder();
-    if (key === "documento") onCreateFile();
-    if (key === "propiedades") onOpenModal("propiedades");
-    if (key === "referencia") onOpenModal("referencia");
-    if (key === "eliminar") onShowPopconfirm();
+    else if (key === "actualizar") onReload();
+    else if (key === "renombrar") onEdit();
+    else if (key === "carpeta") onCreateFolder();
+    else if (key === "documento") onCreateFile();
+    else if (key === "propiedades") onOpenModal("propiedades");
+    else if (key === "referencia") onOpenModal("referencia");
+    else if (key === "eliminar") onShowPopconfirm();
+    else console.log("Click en:", key);
   };
 
   const handleOk = () => {

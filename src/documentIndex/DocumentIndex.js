@@ -8,8 +8,32 @@ import TreeModal from "./Modal/TreeModal";
 import DropdownMenu from "./DropdownMenu/DropdownMenu";
 import TreeDirectory from "./Tree/TreeDirectory";
 
+const nodeStructure = {
+  id: "",
+  key: "",
+  title: "",
+  type: "",
+  customIcon: {
+    color: "#000000",
+    index: 0,
+  },
+  info: "",
+  isLeaf: false,
+  date: new Date(),
+  version: 0,
+  children: [
+    {
+      title: "",
+      type: "",
+      id: "",
+      key: "",
+      info: "",
+    },
+  ],
+};
+
 const DocumentIndex = () => {
-  const [selectedNode, setSelectedNode] = useState();
+  const [selectedNode, setSelectedNode] = useState(nodeStructure);
   const [showDrawer, setShowDrawer] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const ref = useRef();

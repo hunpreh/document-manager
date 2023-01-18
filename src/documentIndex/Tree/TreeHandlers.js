@@ -75,7 +75,7 @@ export function onIcon(node, expanded, loading) {
   let icon;
   if (node.key === loading) return <LoadingOutlined />;
   if (node.type === "nivel") {
-    icon = getCustomIcon(node.customIcon.num, node.customIcon.color);
+    icon = getCustomIcon(node.customIcon.index, node.customIcon.color);
   } else {
     icon = getIconFolder(node.isLeaf, isOld(node.date), expanded);
   }

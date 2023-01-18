@@ -76,7 +76,7 @@ const TreeDirectory = forwardRef((props, ref) => {
               id: `${key}-1`,
               date: "dic. 26 2022, 10:05:00 am",
               version: 1,
-              info: `Modificacion: DD/MM/AAAA HH:MM:SS pm/am\nVersion: #`,
+              info: `Modificación: DD/MM/AAAA HH:MM:SS pm/am\nVersión: #`,
             },
           ])
         );

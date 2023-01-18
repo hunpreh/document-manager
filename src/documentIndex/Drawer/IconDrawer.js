@@ -1,59 +1,62 @@
 import React, { useState, useEffect } from "react";
 import { Drawer } from "antd";
-import { getIcon } from "../../assets/icons";
-
 import useHttp from "../../hooks/use-http";
 import { updateIcon } from "../../firebase/api";
+import { getIcon } from "../../assets/icons";
 
-import CustomIcon from "./CustomIcon";
+import CustomIcon from "./CustomIcon/CustomIcon";
 
-const IconDrawer = (props) => {
-  const [iColor, setIColor] = useState("#000000");
+const IconDrawer = ({
+  node = {},
+  onOpen = false,
+  onClose = () => {},
+  onSaveIcon = () => {},
+}) => {
+  const { customIcon, id } = node;
+  const [color, setColor] = useState(customIcon.color);
+  const [index, setIndex] = useState(customIcon.index);
   const [selectedIcon, setSelectedIcon] = useState();
-  const [iconIndex, setIconIndex] = useState(0);
-  const { sendRequest: updteIcon, status } = useHttp(updateIcon);
+  const { sendRequest: iconUpdate, status } = useHttp(updateIcon);
 
   useEffect(() => {
-    try {
-      setIconIndex(props.node.customIcon.num);
-      setIColor(props.node.customIcon.color);
-    } catch (error) {}
-  }, [props.onOpen]);
+    setIndex(customIcon.index);
+    setColor(customIcon.color);
+  }, [onOpen, customIcon.index, customIcon.color]);
 
   useEffect(() => {
-    const icon = getIcon(iconIndex);
+    const icon = getIcon(index);
     setSelectedIcon(icon);
-  }, [iconIndex]);
+  }, [index]);
 
   useEffect(() => {
     if (status === "completed") {
-      props.onSaveIcon({ color: iColor, num: iconIndex });
-      props.onClose();
+      onSaveIcon({ color, index });
+      onClose();
     }
   }, [status]);
 
+  // CHANGE FOR THE REAL API
   const saveChanges = () => {
-    updteIcon(props.node.id, { color: iColor, num: iconIndex });
+    iconUpdate(id, { color, index });
   };
 
   return (
     <Drawer
       title="Personaliza el ícono"
       placement="right"
-      onClose={() => {
-        props.onClose();
-      }}
-      open={props.onOpen}
+      onClose={onClose}
+      open={onOpen}
     >
       <CustomIcon
         onChangeColor={(color) => {
-          setIColor(color);
+          setColor(color);
         }}
         onSelectIcon={(i) => {
-          setIconIndex(i);
+          setIndex(i);
         }}
         onSave={saveChanges}
-        iconColor={iColor}
+        iconColor={color}
+        iconIndex={index}
         iconSelected={selectedIcon}
       />
     </Drawer>

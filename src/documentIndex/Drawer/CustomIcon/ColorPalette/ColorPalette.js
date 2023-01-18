@@ -1,21 +1,21 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { presetPalettes } from "@ant-design/colors";
 
-const ColorPalette = (props) => {
+const ColorPalette = ({ color, onSelectPrimary = () => {} }) => {
   return (
-    <Fragment>
+    <div>
       {Object.values(presetPalettes).map((c) => (
         <button
           key={c.primary}
           id={c.primary}
-          className="icon_color_btn grow"
+          className={`icon_color_btn grow ${c.primary === color ? "selected" : ""}`}
           style={{ backgroundColor: c.primary }}
-          onClick={(e) => {
-            props.onSelectPrimary(e.target.id);
+          onClick={({target}) => {
+            onSelectPrimary(target.id);
           }}
         ></button>
       ))}
-    </Fragment>
+    </div>
   );
 };
 

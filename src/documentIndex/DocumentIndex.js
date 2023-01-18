@@ -1,7 +1,12 @@
 import "./DocumentsIndex.css";
 import React, { Fragment, useState, useCallback, useRef } from "react";
 import { Dropdown } from "antd";
-import { onCreateFolder, onCreateFile, onDelete } from "./Tree/TreeHandlers";
+import {
+  onCreateFolder,
+  onCreateFile,
+  onDelete,
+  onUpdateIcon,
+} from "./Tree/TreeHandlers";
 
 import IconDrawer from "./Drawer/IconDrawer";
 import TreeModal from "./Modal/TreeModal";
@@ -46,14 +51,6 @@ const DocumentIndex = () => {
     setShowModal(newShow);
   }, []);
 
-  const updateIcon = (icon) => {
-    for (const n of ref.current.data) {
-      if (n.key === selectedNode.key) {
-        n.customIcon = icon;
-      }
-    }
-  };
-
   const actions = (
     <DropdownMenu
       node={selectedNode}
@@ -75,7 +72,9 @@ const DocumentIndex = () => {
         onOpen={showDrawer}
         onClose={onShowDrawer}
         node={selectedNode}
-        onSaveIcon={updateIcon}
+        onSaveIcon={(icon) => {
+          onUpdateIcon(icon, selectedNode, ref);
+        }}
       />
       <TreeModal
         node={selectedNode}

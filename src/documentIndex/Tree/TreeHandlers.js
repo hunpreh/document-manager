@@ -224,6 +224,14 @@ export function onCreateFile(id, ref) {
   });
 }
 
+export function onUpdateIcon(icon, node, ref){
+  for (const n of ref.current.data) {
+    if (n.key === node.key) {
+      n.customIcon = icon;
+    }
+  }
+}
+
 export function updateTitle(list, id, title) {
   const newData = list.map((node) => {
     if (node.id === id) {

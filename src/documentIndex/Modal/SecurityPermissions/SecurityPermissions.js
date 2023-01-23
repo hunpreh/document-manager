@@ -1,6 +1,5 @@
-import { Button, Transfer, Switch, Space, Divider } from "antd";
+import { Button, Transfer, Switch, Space, Divider, Select } from "antd";
 import React, { Fragment, useEffect, useState } from "react";
-import { ReloadOutlined } from "@ant-design/icons";
 
 const locale = {
   itemUnit: "usuario",
@@ -16,10 +15,37 @@ const locale = {
   titles: ["Sin Acceso", "Con Acceso"],
 };
 
-const SecurityPermissions = () => {
+const options = [
+  {
+    value: "r",
+    title: "Permiso de lectura",
+    label: "Lectura",
+  },
+  {
+    value: "w",
+    title: "Permiso de escritura",
+    label: "Escritura",
+  },
+  {
+    value: "wr",
+    title: "Permiso de ejecución",
+    label: "Ejecución",
+  },
+  {
+    value: "a",
+    title: "Todos los permisos",
+    label: "Completo",
+  },
+];
+
+const borderless = { border: "none" };
+
+const SecurityPermissions = ({ isLeaf, closeModal = () => {} }) => {
   const [mockData, setMockData] = useState([]);
   const [targetKeys, setTargetKeys] = useState([]);
   const [showSearch, setShowSearch] = useState(true);
+  const [option, setOption] = useState(false);
+  const [change, setChange] = useState(false);
 
   const getMock = () => {
     const tempTargetKeys = [];
@@ -28,7 +54,7 @@ const SecurityPermissions = () => {
       const data = {
         key: i.toString(),
         title: `usuario ${i + 1}`,
-        description: `descripcion`,
+        description: option,
         chosen: i % 2 === 0,
       };
       if (data.chosen) {
@@ -41,33 +67,18 @@ const SecurityPermissions = () => {
   };
 
   useEffect(() => {
-    getMock();
-  }, []);
+    if (option) getMock();
+    else if (!isLeaf) getMock();
+  }, [option]);
 
   const handleChange = (newTargetKeys) => {
+    setChange(true);
     setTargetKeys(newTargetKeys);
   };
 
   return (
     <Fragment>
-      <Space align="center" size='small' style={{ marginBottom: "15px" }}>
-        <Button
-          size="small"
-          shape="round"
-          icon={<ReloadOutlined />}
-          onClick={getMock}
-        >
-          Actualizar
-        </Button>
-        <Divider type='vertical' />
-        <Button
-          size="small"
-          shape="round"
-          onClick={() => {alert("Guardado")}}
-        >
-          Guardar Cambios
-        </Button>
-        <Divider type='vertical' />
+      <Space align="center" size="small" style={{ marginBottom: "15px" }}>
         <Switch
           defaultChecked={showSearch}
           checkedChildren={"Barra de búsqueda"}
@@ -76,6 +87,41 @@ const SecurityPermissions = () => {
             setShowSearch(x);
           }}
         />
+        {isLeaf && (
+          <Fragment>
+            <Divider type="vertical" />
+            <Select
+              size="small"
+              bordered={false}
+              placeholder="Permisos"
+              style={{
+                width: 100,
+              }}
+              onChange={(value) => {
+                setOption(value);
+              }}
+              options={options}
+            />
+          </Fragment>
+        )}
+        <Divider type="vertical" />
+        <Button
+          size="small"
+          style={borderless}
+          onClick={getMock}
+          disabled={!option && isLeaf}
+        >
+          Actualizar Información
+        </Button>
+        <Divider type="vertical" />
+        <Button
+          size="small"
+          style={borderless}
+          onClick={closeModal}
+          disabled={!change}
+        >
+          Guardar
+        </Button>
       </Space>
       <Transfer
         dataSource={mockData}

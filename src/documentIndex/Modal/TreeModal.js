@@ -31,6 +31,11 @@ const TreeModal = ({
     if (onOpen === "referencia") setOption(true);
   }, [onOpen]);
 
+  const closeModal = () => {
+    onCloseModal(false);
+    setOption(false);
+  };
+
   return (
     <Modal
       title={
@@ -41,10 +46,7 @@ const TreeModal = ({
       open={onOpen}
       width={620}
       bodyStyle={modalStyle}
-      onCancel={() => {
-        onCloseModal(false);
-        setOption(false);
-      }}
+      onCancel={closeModal}
       destroyOnClose
       footer={null}
     >
@@ -56,15 +58,12 @@ const TreeModal = ({
               <GeneralOptions
                 category={category}
                 updateCategory={onUpdateCategory}
-                closeModal={() => {
-                  onCloseModal(false);
-                  setOption(false);
-                }}
+                closeModal={closeModal}
               />
             </Tabs.TabPane>
           )}
           <Tabs.TabPane tab="Seguridad" key="2">
-            <SecurityPermissions />
+            <SecurityPermissions isLeaf={isLeaf} closeModal={closeModal} />
           </Tabs.TabPane>
         </Tabs>
       )}
